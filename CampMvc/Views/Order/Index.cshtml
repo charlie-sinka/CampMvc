@@ -1,0 +1,39 @@
+﻿@model List<LagerMVC.Models.Voucher>
+@{
+    ViewBag.Title = "";
+    var voucherId = ViewBag.VoucherId;
+    var CurrentVoucher = Model.Where(x => x.VoucherId == ViewBag.VoucherId).FirstOrDefault();
+}
+<div class="container my-form-order">
+    <form asp-controller="Order" asp-action="Index" class="row col-md-12">
+        <h4 class="mb-3">Заполните данные</h4>
+        <div class="col-md-6">
+            <label for="FirstName" class="form-label">Имя</label>
+            <input type="text" class="form-control" name="FirstName" value="" required>
+        </div>
+        <div class="col-md-6">
+            <label for="LastName" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" name="LastName" value="" required>
+        </div>
+        <div class="col-md-6">
+            <label for="ContactPhone" class="form-label">Номер телефона</label>
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend2">+7</span>
+                <input type="text" class="form-control" name="ContactPhone" aria-describedby="inputGroupPrepend2" required>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="VoucherId" class="form-label">Смена</label>
+            <select class="form-select" name="VoucherId" required>
+                <option selected value="@ViewBag.VoucherId">@CurrentVoucher.Name</option>
+                @Model.Remove(CurrentVoucher)
+                @foreach(var v in Model)
+                {
+                    <option value="@v.VoucherId">@v.Name</option>
+                }
+            </select>
+        </div>
+        <hr class="my-4">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Оставить заявку</button>
+    </form>
+</div>
